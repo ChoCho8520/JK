@@ -22,7 +22,7 @@ namespace UniversalNoRecoil2
 
         //Establish Variables
         static bool _consoleMENU = true;
-        static bool bPRESET1 = false;
+        static bool bPRESET1 = false, bPRESET2 = false, bPRESET3 = false;
         static bool bFLAG = true;
         static string sPRESET1 = " ", sPRESET2 = " ", sPRESET3 = " ";
         static string sFLAG = "X";
@@ -66,6 +66,7 @@ namespace UniversalNoRecoil2
         static void Main(string[] args)
         {
             Console.Title = "uniCoil";
+            Console.SetWindowSize(30, 10);
             recoilSELECTION(sPRESET1, sPRESET2, sPRESET3, sFLAG);
             while (_consoleMENU)
             {
@@ -81,16 +82,55 @@ namespace UniversalNoRecoil2
                 //RECOIL PRESET KEYBINDS
                 if ((keyNUM1 & 1) == 1)
                 {
-                    bPRESET1 = !bPRESET1;
-                    if (bPRESET1)
+                    if (!bPRESET2 && !bPRESET3)
                     {
-                        sPRESET1 = "X";
-                        recoilSELECTION(sPRESET1, sPRESET2, sPRESET3, sFLAG);
+                        bPRESET1 = !bPRESET1;
+                        if (bPRESET1)
+                        {
+                            sPRESET1 = "X";
+                            recoilSELECTION(sPRESET1, sPRESET2, sPRESET3, sFLAG);
+                        }
+                        else
+                        {
+                            sPRESET1 = " ";
+                            recoilSELECTION(sPRESET1, sPRESET2, sPRESET3, sFLAG);
+                        }
                     }
-                    else
+                }
+
+                if ((keyNUM2 & 1) == 1)
+                {
+                    if (!bPRESET1 && !bPRESET3)
                     {
-                        sPRESET1 = " ";
-                        recoilSELECTION(sPRESET1, sPRESET2, sPRESET3, sFLAG);
+                        bPRESET2 = !bPRESET2;
+                        if (bPRESET2)
+                        {
+                            sPRESET2 = "X";
+                            recoilSELECTION(sPRESET1, sPRESET2, sPRESET3, sFLAG);
+                        }
+                        else
+                        {
+                            sPRESET2 = " ";
+                            recoilSELECTION(sPRESET1, sPRESET2, sPRESET3, sFLAG);
+                        }
+                    }
+                }
+
+                if ((keyNUM3 & 1) == 1)
+                {
+                    if (!bPRESET1 && !bPRESET2)
+                    {
+                        bPRESET3 = !bPRESET3;
+                        if (bPRESET3)
+                        {
+                            sPRESET3 = "X";
+                            recoilSELECTION(sPRESET1, sPRESET2, sPRESET3, sFLAG);
+                        }
+                        else
+                        {
+                            sPRESET3 = " ";
+                            recoilSELECTION(sPRESET1, sPRESET2, sPRESET3, sFLAG);
+                        }
                     }
                 }
 
@@ -125,6 +165,30 @@ namespace UniversalNoRecoil2
                     else
                     {
                         _uniCoilF(keyLMB, 7, 7);
+                    }
+                }
+
+                if (bPRESET2)
+                {
+                    if (bFLAG)
+                    {
+                        _uniCoil(keyRMB, keyLMB, 10, 10);
+                    }
+                    else
+                    {
+                        _uniCoilF(keyLMB, 10, 10);
+                    }
+                }
+
+                if (bPRESET3)
+                {
+                    if (bFLAG)
+                    {
+                        _uniCoil(keyRMB, keyLMB, 15, 15);
+                    }
+                    else
+                    {
+                        _uniCoilF(keyLMB, 15, 15);
                     }
                 }
             }
