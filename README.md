@@ -10,7 +10,9 @@ There are 3 presets , only 1 can be selected at a time. (use numpad 1-3)
 > 2. Medium Range
 > 3. Long Range
 _a tone will sound to let you know the patch is active_
+
 _as a safety precaution there is the option to require ADS , toggle the flag with "INSERT" (Enabled by default)_
+
 **NOTE**: At any time you can press END to remove the patch and close the application entirely
 
 ### Compiling
@@ -21,6 +23,7 @@ _as a safety precaution there is the option to require ADS , toggle the flag wit
 > When cloning make sure to put all files in the same directory , everything is in folders for organization purposes only.
 
 Customize recoil presets by changing the integers(*) within the **Recoil Events** in `MAIN.CPP` or `MAIN.CS`
+
 > `_UniCoil(*, *);`
 > `_flaggedCOIL(*, *);`
 > `helpers._uniCoilF(keyLMB, *, *);`
