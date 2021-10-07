@@ -85,13 +85,13 @@ int main()
 
             if (bADSFLAG)
             {
-                sPRESET3 = " ";
+                sFLAG = " ";
                 _clearConsole();
                 recoilSELECTION(sPRESET1, sPRESET2, sPRESET3, sFLAG);
             }
             else
             {
-                sPRESET3 = "X";
+                sFLAG = "X";
                 _clearConsole();
                 recoilSELECTION(sPRESET1, sPRESET2, sPRESET3, sFLAG);
             }
