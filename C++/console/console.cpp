@@ -42,6 +42,7 @@ void recoilSELECTION(string& HACK1 , string& HACK2, string& HACK3, string& FLAG)
     std::cout << "| [2] PRESET 2:  => [" << HACK2 << "] |\n";
     std::cout << "| [3] PRESET 3:  => [" << HACK3 << "] |\n";
     std::cout << "| [INS] REQ ADS: => [" << FLAG << "] |\n";
+    std::cout << "| [HOME] CUSTOM         |\n";
     std::cout << "| [END] QUIT            |\n";
-    std::cout << "|v1.0-------NightFyre---|" << std::endl;
+    std::cout << "|v1.1-------NightFyre---|" << std::endl;
 }
