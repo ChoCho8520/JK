@@ -180,7 +180,7 @@ int custom()
 
     int speed = 9;
     int delay = 9;
-        
+
     //Introduce ADS Flag
     string adsFLAG;
 
@@ -222,7 +222,7 @@ int custom()
         _clearConsole();
 
         //Display Main Menu
-        bADSFLAG = true;
+        bADSFLAG = false;
         sFLAG = "X";
         recoilSELECTION(sPRESET1, sPRESET2, sPRESET3, sFLAG);
     }
@@ -268,7 +268,7 @@ int custom()
             _clearConsole();
 
             //Display Main Menu
-            bADSFLAG = true;
+            bADSFLAG = false;
             sFLAG = "X";
             recoilSELECTION(sPRESET1, sPRESET2, sPRESET3, sFLAG);
         }
