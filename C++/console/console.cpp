@@ -33,16 +33,17 @@ void _setWindow(int Width, int Height)
     SetConsoleWindowInfo(Handle, TRUE, &Rect);            // Set Window Size
 }
 
-void recoilSELECTION(string& HACK1 , string& HACK2, string& HACK3, string& FLAG)
+void recoilSELECTION(string& HACK1 , string& HACK2, string& HACK3, string& HACK4, string& FLAG)
 {
     _setConsole();
     std::cout << " _______________________ \n";
     std::cout << "|-------NO RECOIL-------|\n";
-    std::cout << "| [1] PRESET 1:  => [" << HACK1 << "] |\n";
-    std::cout << "| [2] PRESET 2:  => [" << HACK2 << "] |\n";
-    std::cout << "| [3] PRESET 3:  => [" << HACK3 << "] |\n";
+    std::cout << "| [1] PRESET 1   => [" << HACK1 << "] |\n";
+    std::cout << "| [2] PRESET 2   => [" << HACK2 << "] |\n";
+    std::cout << "| [3] PRESET 3   => [" << HACK3 << "] |\n";
+    std::cout << "| [4] RAPID FIRE => [" << HACK4 << "] |\n";
     std::cout << "| [INS] REQ ADS: => [" << FLAG << "] |\n";
     std::cout << "| [HOME] CUSTOM         |\n";
     std::cout << "| [END] QUIT            |\n";
-    std::cout << "|v1.1-------NightFyre---|" << std::endl;
+    std::cout << "|v1.2-------NightFyre---|" << std::endl;
 }

@@ -2,8 +2,8 @@
 
 //Establish Variables
 bool bMENU = false;
-bool bPRESET1 = false, bPRESET2 = false, bPRESET3 = false;
-string sPRESET1 = " ", sPRESET2 = " ", sPRESET3 = " ";
+bool bPRESET1 = false, bPRESET2 = false, bPRESET3 = false, bRAPID = false;
+string sPRESET1 = " ", sPRESET2 = " ", sPRESET3 = " ", sRAPID = " ";
 bool bADSFLAG = false;
 string sFLAG = "X";
 
@@ -17,8 +17,8 @@ int main()
 {
     //Prepare Console Window
     _setWindow(30, 10);
-    SetConsoleTitle(L"Unicoil");
-    recoilSELECTION(sPRESET1, sPRESET2, sPRESET3, sFLAG);
+    SetConsoleTitle(L"uniCoil");
+    recoilSELECTION(sPRESET1, sPRESET2, sPRESET3, sRAPID, sFLAG);
     bMENU = true;
 
     //Display Main Menu
@@ -35,13 +35,13 @@ int main()
                     sPRESET1 = "X";
                     _clearConsole();
                     cout << "\007" << endl;;
-                    recoilSELECTION(sPRESET1, sPRESET2, sPRESET3, sFLAG);
+                    recoilSELECTION(sPRESET1, sPRESET2, sPRESET3, sRAPID, sFLAG);
                 }
                 else
                 {
                     sPRESET1 = " ";
                     _clearConsole();
-                    recoilSELECTION(sPRESET1, sPRESET2, sPRESET3, sFLAG);
+                    recoilSELECTION(sPRESET1, sPRESET2, sPRESET3, sRAPID, sFLAG);
                 }
             }
         }
@@ -56,13 +56,13 @@ int main()
                     sPRESET2 = "X";
                     _clearConsole();
                     cout << "\007" << endl;;
-                    recoilSELECTION(sPRESET1, sPRESET2, sPRESET3, sFLAG);
+                    recoilSELECTION(sPRESET1, sPRESET2, sPRESET3, sRAPID, sFLAG);
                 }
                 else
                 {
                     sPRESET2 = " ";
                     _clearConsole();
-                    recoilSELECTION(sPRESET1, sPRESET2, sPRESET3, sFLAG);
+                    recoilSELECTION(sPRESET1, sPRESET2, sPRESET3, sRAPID, sFLAG);
                 }
             }
         }
@@ -77,21 +77,33 @@ int main()
                     sPRESET3 = "X";
                     _clearConsole();
                     cout << "\007" << endl;;
-                    recoilSELECTION(sPRESET1, sPRESET2, sPRESET3, sFLAG);
+                    recoilSELECTION(sPRESET1, sPRESET2, sPRESET3, sRAPID, sFLAG);
                 }
                 else
                 {
                     sPRESET3 = " ";
                     _clearConsole();
-                    recoilSELECTION(sPRESET1, sPRESET2, sPRESET3, sFLAG);
+                    recoilSELECTION(sPRESET1, sPRESET2, sPRESET3, sRAPID, sFLAG);
                 }
             }
         }
 
         //Rapid Fire
-        if (GetAsyncKeyState(VK_NUMPAD5) & 1)
+        if (GetAsyncKeyState(VK_NUMPAD4) & 1)
         {
-
+            bRAPID = !bRAPID;
+            if (bRAPID)
+            {
+                sRAPID = "X";
+                _clearConsole();
+                recoilSELECTION(sPRESET1, sPRESET2, sPRESET3, sRAPID, sFLAG);
+            }
+            else
+            {
+                sRAPID = " ";
+                _clearConsole();
+                recoilSELECTION(sPRESET1, sPRESET2, sPRESET3, sRAPID, sFLAG);
+            }
         }
 
         //Customize
@@ -113,13 +125,13 @@ int main()
             {
                 sFLAG = " ";
                 _clearConsole();
-                recoilSELECTION(sPRESET1, sPRESET2, sPRESET3, sFLAG);
+                recoilSELECTION(sPRESET1, sPRESET2, sPRESET3, sRAPID, sFLAG);
             }
             else
             {
                 sFLAG = "X";
                 _clearConsole();
-                recoilSELECTION(sPRESET1, sPRESET2, sPRESET3, sFLAG);
+                recoilSELECTION(sPRESET1, sPRESET2, sPRESET3, sRAPID, sFLAG);
             }
         }
 
@@ -166,10 +178,18 @@ int main()
             }
         }
 
+        //Rapid Fire
+        if (bRAPID)
+        {
+            _rapidFire(50);
+        }
+
         //Timer
         Sleep(1);
     }
 }
+
+
 
 int custom()
 {
@@ -181,8 +201,13 @@ int custom()
     int speed = 9;
     int delay = 9;
 
+
     //Introduce ADS Flag
     string adsFLAG;
+    
+    //Rapid Fire
+    string rapidFLAG;
+    bool bRAPID = false;
 
     cout << "Enter Recoil Amount: (between 0 - 9)" << endl;
     cin >> speed;
@@ -192,17 +217,84 @@ int custom()
     cin >> delay;
     _clearConsole();
 
+    //Begin Branch
     cout << "Require ADS? (Y/N)" << endl;
     cin >> adsFLAG;
     if (adsFLAG == "Y" || adsFLAG == "y")
     {
         _clearConsole();
-        bCUSTOM = true;
+        cout << "Rapid Fire? (Y/N)" << endl;
+        cin >> rapidFLAG;
+        if (rapidFLAG == "Y" || rapidFLAG == "y")
+        {
+            bCUSTOM = true;
+            bRAPID = true;
+        }
+        else if (rapidFLAG == "N" || rapidFLAG == "n")
+        {
+            bCUSTOM = true;
+        }
+        else
+        {
+            //Return to main
+            _clearConsole();
+            std::cout << "Please enter a valid response of Y or N\n";
+            std::cout << "returning to Main Menu" << std::endl;
+            Sleep(3000);
+
+            //Restore Custom Menu Defaults
+            speed = 0;
+            delay = 0;
+            adsFLAG = "";
+            bCUSTOM = false;
+            bRAPID = false;
+            cMENU = false;
+            bMENU = true;
+            _clearConsole();
+
+            //Display Main Menu
+            bADSFLAG = false;
+            sFLAG = "X";
+            recoilSELECTION(sPRESET1, sPRESET2, sPRESET3, sRAPID, sFLAG);
+        }
     }
     else if (adsFLAG == "N" || adsFLAG == "n")
     {
-        _clearConsole();
-        bCUSTOM = true;
+        _clearConsole();        
+        cout << "Rapid Fire? (Y/N)" << endl;
+        cin >> rapidFLAG;
+        if (rapidFLAG == "Y" || rapidFLAG == "y")
+        {
+            bCUSTOM = true;
+            bRAPID = true;
+        }
+        else if (rapidFLAG == "N" || rapidFLAG == "n")
+        {
+            bCUSTOM = true;
+        }
+        else
+        {
+            //Return to main
+            _clearConsole();
+            std::cout << "Please enter a valid response of Y or N\n";
+            std::cout << "returning to Main Menu" << std::endl;
+            Sleep(3000);
+
+            //Restore Custom Menu Defaults
+            speed = 0;
+            delay = 0;
+            adsFLAG = "";
+            bCUSTOM = false;
+            bRAPID = false;
+            cMENU = false;
+            bMENU = true;
+            _clearConsole();
+
+            //Display Main Menu
+            bADSFLAG = false;
+            sFLAG = "X";
+            recoilSELECTION(sPRESET1, sPRESET2, sPRESET3, sRAPID, sFLAG);
+        }
     }
     else
     {
@@ -217,6 +309,7 @@ int custom()
         delay = 0;
         adsFLAG = "";
         bCUSTOM = false;
+        bRAPID = false;
         cMENU = false;
         bMENU = true;
         _clearConsole();
@@ -224,23 +317,33 @@ int custom()
         //Display Main Menu
         bADSFLAG = false;
         sFLAG = "X";
-        recoilSELECTION(sPRESET1, sPRESET2, sPRESET3, sFLAG);
+        recoilSELECTION(sPRESET1, sPRESET2, sPRESET3, sRAPID, sFLAG);
     }
 
+    // NightFyre Console framework
     while (bCUSTOM)
     {
         //Display user settings and other options
         if (!cMENU)
         {
             //Create menu
-            std::cout << " _______________________\n";
-            std::cout << "|-----CUSTOM PRESET-----|\n";
-            std::cout << "| Speed        =>   [" << speed << "] |\n";
-            std::cout << "| Delay        =>   [" << delay << "] |\n";
-            std::cout << "| ADS Flag     =>   [" << adsFLAG << "] |\n";
-            std::cout << "|v1.1-------NightFyre---|\n";
+            std::cout << " _________________________\n";
+            std::cout << "|------CUSTOM PRESET------|\n";
+            std::cout << "| Speed        =>   [" << speed << "]   |\n";
+            std::cout << "| Delay        =>   [" << delay << "]   |\n";
+            std::cout << "| ADS Flag     =>   [" << adsFLAG << "]   |\n";
+            if (bRAPID)
+            {
+                std::cout << "| Rapid Fire   =>   [ON]  |\n";
+
+            }
+            else
+            {
+                std::cout << "| Rapid Fire   =>   [OFF] |\n";
+
+            }
+            std::cout << "|v1.2----------NightFyre--|\n";
             std::cout << "PRESS [HOME] FOR MAIN MENU\n";
-            //std::cout << "PRESS [INS] FOR CUSTOM MENU\n";
             std::cout << "PRESS [END] TO QUIT\n" << std::endl;;
             cMENU = true;
             cRUN = true;
@@ -249,6 +352,11 @@ int custom()
         if (cRUN)
         {
             _uniCustom(adsFLAG, speed, delay);
+        }
+
+        if (bRAPID)
+        {
+            _rapidFire(50);
         }
 
         if (GetAsyncKeyState(VK_HOME) & 1)
@@ -263,6 +371,7 @@ int custom()
             delay = 0;
             adsFLAG = "";
             bCUSTOM = false;
+            bRAPID = false;
             cMENU = false;
             bMENU = true;
             _clearConsole();
@@ -270,12 +379,7 @@ int custom()
             //Display Main Menu
             bADSFLAG = false;
             sFLAG = "X";
-            recoilSELECTION(sPRESET1, sPRESET2, sPRESET3, sFLAG);
-        }
-
-        if (GetAsyncKeyState(VK_INSERT) & 1)
-        {
-
+            recoilSELECTION(sPRESET1, sPRESET2, sPRESET3, sRAPID, sFLAG);
         }
 
         if (GetKeyState(VK_END))

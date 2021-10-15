@@ -21,6 +21,17 @@ void _flaggedCOIL(int speed, int delay)
     }
 }
 
+void _rapidFire(int delay)
+{
+    if (GetAsyncKeyState(VK_MENU) < 0)
+    {
+        mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0);
+        Sleep(1);
+        mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
+        Sleep(delay);
+    }
+}
+
 void _uniCustom(string& FLAG, int& speed, int& delay)
 {
     if (FLAG == "Y" || FLAG == "y")
