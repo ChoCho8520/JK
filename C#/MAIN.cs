@@ -19,15 +19,18 @@ namespace UniversalNoRecoil2
         static string sFLAG = "X";
         
         //Custom Menu
-        static int cSPEED, cDELAY;
-        static string cRAPID, cFLAG;
         static int fDELAY, fSPEED;
         static string fFIRE, fFLAG;
-        static void Main(string[] args)
+        static bool bcRAPID = false;
+
+        static void Main()
         {
             Console.Title = "uniCoil";
             Console.SetWindowSize(30, 12);
-            func.recoilSELECTION(sPRESET1, sPRESET2, sPRESET3, sRAPIDFIRE, sFLAG);
+            func._consoleMENU(sPRESET1, sPRESET2, sPRESET3, sRAPIDFIRE, sFLAG);
+            Thread RAPID_FIRE = new Thread(_rapidFire) { IsBackground = true };
+            RAPID_FIRE.Start();
+
             while (_consoleMENU)
             {
                 //Establish Keybinds
@@ -55,13 +58,13 @@ namespace UniversalNoRecoil2
                             if (bPRESET1)
                             {
                                 sPRESET1 = "X";
-                                func.recoilSELECTION(sPRESET1, sPRESET2, sPRESET3, sRAPIDFIRE, sFLAG);
                                 SystemSounds.Asterisk.Play();
+                                func._consoleMENU(sPRESET1, sPRESET2, sPRESET3, sRAPIDFIRE, sFLAG);
                             }
                             else
                             {
                                 sPRESET1 = " ";
-                                func.recoilSELECTION(sPRESET1, sPRESET2, sPRESET3, sRAPIDFIRE, sFLAG);
+                                func._consoleMENU(sPRESET1, sPRESET2, sPRESET3, sRAPIDFIRE, sFLAG);
                             }
                         }
                     }
@@ -78,12 +81,12 @@ namespace UniversalNoRecoil2
                             {
                                 sPRESET2 = "X";
                                 SystemSounds.Asterisk.Play();
-                                func.recoilSELECTION(sPRESET1, sPRESET2, sPRESET3, sRAPIDFIRE, sFLAG);
+                                func._consoleMENU(sPRESET1, sPRESET2, sPRESET3, sRAPIDFIRE, sFLAG);
                             }
                             else
                             {
                                 sPRESET2 = " ";
-                                func.recoilSELECTION(sPRESET1, sPRESET2, sPRESET3, sRAPIDFIRE, sFLAG);
+                                func._consoleMENU(sPRESET1, sPRESET2, sPRESET3, sRAPIDFIRE, sFLAG);
                             }
                         }
                     }
@@ -100,12 +103,12 @@ namespace UniversalNoRecoil2
                             {
                                 sPRESET3 = "X";
                                 SystemSounds.Asterisk.Play();
-                                func.recoilSELECTION(sPRESET1, sPRESET2, sPRESET3, sRAPIDFIRE, sFLAG);
+                                func._consoleMENU(sPRESET1, sPRESET2, sPRESET3, sRAPIDFIRE, sFLAG);
                             }
                             else
                             {
                                 sPRESET3 = " ";
-                                func.recoilSELECTION(sPRESET1, sPRESET2, sPRESET3, sRAPIDFIRE, sFLAG);
+                                func._consoleMENU(sPRESET1, sPRESET2, sPRESET3, sRAPIDFIRE, sFLAG);
                             }
                         }
                     }
@@ -120,12 +123,12 @@ namespace UniversalNoRecoil2
                         {
                             sRAPIDFIRE = "X";
                             SystemSounds.Asterisk.Play();
-                            func.recoilSELECTION(sPRESET1, sPRESET2, sPRESET3, sRAPIDFIRE, sFLAG);
+                            func._consoleMENU(sPRESET1, sPRESET2, sPRESET3, sRAPIDFIRE, sFLAG);
                         }
                         else
                         {
                             sRAPIDFIRE = " ";
-                            func.recoilSELECTION(sPRESET1, sPRESET2, sPRESET3, sRAPIDFIRE, sFLAG);
+                            func._consoleMENU(sPRESET1, sPRESET2, sPRESET3, sRAPIDFIRE, sFLAG);
                         }
                     }
                 }
@@ -177,14 +180,15 @@ namespace UniversalNoRecoil2
                                 Console.WriteLine("CUSTOM SETTINGS");
                                 Console.WriteLine($"Recoil Amount: {cSPEED}\n" +
                                 $"Delay: {cDELAY}\n" +
-                                $"Rapid Fire: {cRAPID}\n" +
-                                $"Require ADS: {cFLAG}\n");
+                                "Rapid Fire: [ON] (Hold Left ALT)\n" +
+                                "Require ADS: [ON] \n");
                                 Console.WriteLine("Press [HOME] to return to Main Menu\n" +
                                     "Press [END] to quit");
                                 fDELAY = cDELAY;
                                 fSPEED = cSPEED;
                                 fFLAG = cFLAG;
                                 fFIRE = cRAPID;
+                                bcRAPID = true;
                                 bCUSTOM = true;
                             }
                             else if (cFLAG == "N" || cFLAG == "n")
@@ -192,14 +196,15 @@ namespace UniversalNoRecoil2
                                 Console.WriteLine("CUSTOM SETTINGS");
                                 Console.WriteLine($"Recoil Amount: {cSPEED}\n" +
                                 $"Delay: {cDELAY}\n" +
-                                $"Rapid Fire: {cRAPID}\n" +
-                                $"Require ADS: {cFLAG}\n");
+                                "Rapid Fire: [ON] (Hold Left ALT)\n" +
+                                $"Require ADS: [OFF]\n");
                                 Console.WriteLine("Press [HOME] to return to Main Menu\n" +
                                     "Press [END] to quit");
                                 fDELAY = cDELAY;
                                 fSPEED = cSPEED;
                                 fFLAG = cFLAG;
                                 fFIRE = cRAPID;
+                                bcRAPID = true;
                                 bCUSTOM = true;
                             }
                             else
@@ -209,20 +214,21 @@ namespace UniversalNoRecoil2
                                     "returning to Main Menu");
                                 Thread.Sleep(3000);
                                 _customMENU = false;
-                                func.recoilSELECTION(sPRESET1, sPRESET2, sPRESET3, sRAPIDFIRE, sFLAG);
+                                func._consoleMENU(sPRESET1, sPRESET2, sPRESET3, sRAPIDFIRE, sFLAG);
                             }
                         }
                         else if (cRAPID == "N" || cRAPID == "n")
                         {
                             Console.WriteLine("Require ADS? (Y/N)");
                             string cFLAG = Console.ReadLine();
+                            Console.Clear();
                             if (cFLAG == "Y" || cFLAG == "y")
                             {
                                 Console.WriteLine("CUSTOM SETTINGS");
                                 Console.WriteLine($"Recoil Amount: {cSPEED}\n" +
                                 $"Delay: {cDELAY}\n" +
-                                $"Rapid Fire: {cRAPID}\n" +
-                                $"Require ADS: {cFLAG}\n");
+                                "Rapid Fire: [OFF] \n" +
+                                "Require ADS: [ON] \n");
                                 Console.WriteLine("Press [HOME] to return to Main Menu\n" +
                                     "Press [END] to quit");
                                 fDELAY = cDELAY;
@@ -236,8 +242,8 @@ namespace UniversalNoRecoil2
                                 Console.WriteLine("CUSTOM SETTINGS");
                                 Console.WriteLine($"Recoil Amount: {cSPEED}\n" +
                                 $"Delay: {cDELAY}\n" +
-                                $"Rapid Fire: {cRAPID}\n" +
-                                $"Require ADS: {cFLAG}\n");
+                                "Rapid Fire: [OFF]\n" +
+                                "Require ADS: [OFF]\n");
                                 Console.WriteLine("Press [HOME] to return to Main Menu\n" +
                                     "Press [END] to quit");
                                 fDELAY = cDELAY;
@@ -253,7 +259,7 @@ namespace UniversalNoRecoil2
                                     "returning to Main Menu");
                                 Thread.Sleep(3000);
                                 _customMENU = false;
-                                func.recoilSELECTION(sPRESET1, sPRESET2, sPRESET3, sRAPIDFIRE, sFLAG);
+                                func._consoleMENU(sPRESET1, sPRESET2, sPRESET3, sRAPIDFIRE, sFLAG);
                             }
                         }
                         else
@@ -263,18 +269,19 @@ namespace UniversalNoRecoil2
                                 "returning to Main Menu");
                             Thread.Sleep(3000);
                             _customMENU = false;
-                            func.recoilSELECTION(sPRESET1, sPRESET2, sPRESET3, sRAPIDFIRE, sFLAG);
+                            func._consoleMENU(sPRESET1, sPRESET2, sPRESET3, sRAPIDFIRE, sFLAG);
                         }
                     }
                     else
                     {
                         _customMENU = false;
                         bCUSTOM = false;
+                        bcRAPID = false;
                         fSPEED = 0;
                         fDELAY = 0; 
                         fFIRE = ""; 
                         fFLAG = "";
-                        func.recoilSELECTION(sPRESET1, sPRESET2, sPRESET3, sRAPIDFIRE, sFLAG);
+                        func._consoleMENU(sPRESET1, sPRESET2, sPRESET3, sRAPIDFIRE, sFLAG);
                     }
                 }
 
@@ -292,12 +299,12 @@ namespace UniversalNoRecoil2
                         if (bFLAG)
                         {
                             sFLAG = "X";
-                            func.recoilSELECTION(sPRESET1, sPRESET2, sPRESET3, sRAPIDFIRE, sFLAG);
+                            func._consoleMENU(sPRESET1, sPRESET2, sPRESET3, sRAPIDFIRE, sFLAG);
                         }
                         else
                         {
                             sFLAG = " ";
-                            func.recoilSELECTION(sPRESET1, sPRESET2, sPRESET3, sRAPIDFIRE, sFLAG);
+                            func._consoleMENU(sPRESET1, sPRESET2, sPRESET3, sRAPIDFIRE, sFLAG);
                         }
                     }
                 }
@@ -307,15 +314,27 @@ namespace UniversalNoRecoil2
                 {
                     if (bFLAG)
                     {
-                        func._uniCoil(keyRMB, keyLMB, 7, 7);
+                        func._uniCoil(keyRMB, keyLMB, 3, 3);
                     }
                     else
                     {
-                        func._uniCoilF(keyLMB, 7, 7);
+                        func._uniCoilF(keyLMB, 3, 3);
                     }
                 }
 
                 if (bPRESET2)
+                {
+                    if (bFLAG)
+                    {
+                        func._uniCoil(keyRMB, keyLMB, 6, 6);
+                    }
+                    else
+                    {
+                        func._uniCoilF(keyLMB, 6, 6);
+                    }
+                }
+
+                if (bPRESET3)
                 {
                     if (bFLAG)
                     {
@@ -327,29 +346,32 @@ namespace UniversalNoRecoil2
                     }
                 }
 
-                if (bPRESET3)
-                {
-                    if (bFLAG)
-                    {
-                        func._uniCoil(keyRMB, keyLMB, 15, 15);
-                    }
-                    else
-                    {
-                        func._uniCoilF(keyLMB, 15, 15);
-                    }
-                }
-
-                if (bRAPIDFIRE)
-                {
-                    if ((keyALT & 1) != 0) 
-                    {
-                        func._rFIRE(100);
-                    }  
-                }
-
                 if (bCUSTOM)
                 {
-                    func._uniCustom(keyRMB, keyLMB, keyALT, fSPEED, fDELAY, fFIRE, fFLAG);
+                    func._uniCustom(keyRMB, keyLMB, keyALT, fSPEED, fDELAY, fFLAG);
+                }
+            }
+        }
+
+        private static void _rapidFire()
+        {
+            while (true)
+            {
+                if (bRAPIDFIRE)
+                {
+                    //LEFT ALT
+                    if (func.GetAsyncKeyState(func.VK_MENU) < 0)
+                    {
+                        func._rFIRE(65);
+                    }
+                }
+                else if (bcRAPID)
+                {
+                    //LEFT ALT
+                    if (func.GetAsyncKeyState(func.VK_MENU) < 0)
+                    {
+                        func._rFIRE(65);
+                    }
                 }
             }
         }

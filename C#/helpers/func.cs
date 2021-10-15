@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
+using System.Runtime.InteropServices;
 
 namespace helpers.UniversalNoRecoil2
 {
@@ -20,6 +16,8 @@ namespace helpers.UniversalNoRecoil2
         public static extern short GetAsyncKeyState(Int32 vKey);
         public static int VK_LBUTTON = 0x01;
         public static int VK_RBUTTON = 0x02;
+        public static int VK_XBUTTON1 = 0x05;
+        public static int VK_XBUTTON2 = 0x06;
         public static int VK_MENU = 0x12;
         public static int VK_END = 0x23;
         public static int VK_HOME = 0x24;
@@ -39,7 +37,7 @@ namespace helpers.UniversalNoRecoil2
         /// <param name="PRESET3">String 3</param>
         /// <param name="RAPIDFIRE">String 4</param>
         /// <param name="FLAG">String 5</param>
-        public static void recoilSELECTION(string PRESET1, string PRESET2, string PRESET3, string RAPIDFIRE, string FLAG)
+        public static void _consoleMENU(string PRESET1, string PRESET2, string PRESET3, string RAPIDFIRE, string FLAG)
         {
             Console.Clear();
             Console.WriteLine(" _______________________ \n" +
@@ -51,7 +49,7 @@ namespace helpers.UniversalNoRecoil2
             $"| [INS] REQ ADS: => [{FLAG}] |\n" +
             "| [HOME] CUSTOMIZE      |\n" +
             "| [END] QUIT            |\n" +
-            "|v1.0-------NightFyre---|");
+            "|v1.1-------NightFyre---|");
         }
 
         /// <summary>
@@ -95,21 +93,20 @@ namespace helpers.UniversalNoRecoil2
         public static void _rFIRE(int delay)
         {
             mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0);
-            Thread.Sleep(20);
+            Thread.Sleep(1);
             mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
             Thread.Sleep(delay);
         }
 
         /// <summary>
-        /// 
+        /// customSELECTIONS
         /// </summary>
         /// <param name="aim_key"></param>
         /// <param name="shoot_key"></param>
         /// <param name="SPEED"></param>
         /// <param name="DELAY"></param>
-        /// <param name="RAPID"></param>
         /// <param name="FLAG"></param>
-        public static void _uniCustom(short aim_key, short shoot_key, short rapid_key, int SPEED, int DELAY, string RAPID, string FLAG)
+        public static void _uniCustom(short aim_key, short shoot_key, short rapid_key, int SPEED, int DELAY, string FLAG)
         {
             if (FLAG == "Y" || FLAG == "y")
             {
@@ -121,15 +118,6 @@ namespace helpers.UniversalNoRecoil2
                         Thread.Sleep(DELAY);
                     }
                 }
-
-                //Rapid Fire
-                if (RAPID == "Y" || RAPID == "y")
-                {
-                    if ((rapid_key & 1) != 0)
-                    {
-                        func._rFIRE(100);
-                    }
-                }
             }
             else if (FLAG == "N" || FLAG == "n")
             {
@@ -137,15 +125,6 @@ namespace helpers.UniversalNoRecoil2
                 {
                     mouse_event(MOUSEEVENTF_MOVE, 0, SPEED, 0, 0);
                     Thread.Sleep(DELAY);
-                }
-
-                //Rapid Fire
-                if (RAPID == "Y" || RAPID == "y")
-                {
-                    if ((rapid_key & 1) != 0)
-                    {
-                        func._rFIRE(100);
-                    }
                 }
             }
         }
