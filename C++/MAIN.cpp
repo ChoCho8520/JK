@@ -1,5 +1,7 @@
 #include "stdafx.h"
 
+void _assignKeys(Config& config);
+
 //Establish Variables
 bool bMENU = false;
 bool bPRESET1 = false, bPRESET2 = false, bPRESET3 = false, bRAPID = false;
@@ -13,19 +15,65 @@ bool bCUSTOM = false;
 bool cMENU = false;
 bool cRUN = false;
 
+//CONFIG
+int userSELECT;
+short PRESET1;
+short PRESET2;
+short PRESET3;
+short RAPIDFIRE;
+int recoilStrength1;
+int recoilDelay1;
+int recoilStrength2;
+int recoilDelay2;
+int recoilStrength3;
+int recoilDelay3;
+int rapidFireDelay;
+
+void _assignKeys(Config& config)
+{
+    //USER DEFINED KEYS (COMING SOON)
+    if (userSELECT == 1)
+    {
+        PRESET1 = VK_NUMPAD1;         // PRESET 1 KEY
+        PRESET2 = VK_NUMPAD2;        // PRESET 2 KEY
+        PRESET3 = VK_NUMPAD3;       // PRESET 3 KEY
+        RAPIDFIRE = VK_NUMPAD4;    // RAPID FIRE KEY
+    }
+    else if (userSELECT == 2)
+    {
+        PRESET1 = VK_F5;         // PRESET 1 KEY
+        PRESET2 = VK_F6;        // PRESET 2 KEY
+        PRESET3 = VK_F7;       // PRESET 3 KEY
+        RAPIDFIRE = VK_F8;    // RAPID FIRE KEY
+    }
+
+    //USER DEFINED PRESETS
+    recoilStrength1 = config.recoilStrength1;            // PRESET 1 Recoil Strength
+    recoilDelay1 = config.recoilDelay1;                 // PRESET 1 Recoil DELAY
+    recoilStrength2 = config.recoilStrength1;          // PRESET 2 Recoil Strength
+    recoilDelay2 = config.recoilDelay2;               // PRESET 2 Recoil DELAY
+    recoilStrength3 = config.recoilStrength1;        // PRESET 3 Recoil Strength
+    recoilDelay3 = config.recoilDelay3;             // PRESET 4 Recoil DELAY
+    rapidFireDelay = config.rapidFireDelay;        // Rapid Fire Delay
+}
+
 int main()
 {
+    Config config;
+    _loadConfig(config, userSELECT);
+    _assignKeys(config);
+
     //Prepare Console Window
-    _setWindow(30, 10);
-    SetConsoleTitle(L"uniCoil");
-    recoilSELECTION(sPRESET1, sPRESET2, sPRESET3, sRAPID, sFLAG);
+    _setWindow(30, 12);
+    SetConsoleTitle(L"uniCoil | v2.0");
+    _userMENU(userSELECT, sPRESET1, sPRESET2, sPRESET3, sRAPID, sFLAG);
     bMENU = true;
 
     //Display Main Menu
     while (bMENU)
     {
         //Keybinds
-        if (GetAsyncKeyState(VK_NUMPAD1) & 1)
+        if (GetAsyncKeyState(PRESET1) & 1)
         {
             if (!bPRESET2 && !bPRESET3)
             {
@@ -35,18 +83,19 @@ int main()
                     sPRESET1 = "X";
                     _clearConsole();
                     cout << "\007" << endl;;
-                    recoilSELECTION(sPRESET1, sPRESET2, sPRESET3, sRAPID, sFLAG);
+                    _userMENU(userSELECT, sPRESET1, sPRESET2, sPRESET3, sRAPID, sFLAG);
+
                 }
                 else
                 {
                     sPRESET1 = " ";
                     _clearConsole();
-                    recoilSELECTION(sPRESET1, sPRESET2, sPRESET3, sRAPID, sFLAG);
+                    _userMENU(userSELECT, sPRESET1, sPRESET2, sPRESET3, sRAPID, sFLAG);
                 }
             }
         }
 
-        if (GetAsyncKeyState(VK_NUMPAD2) & 1)
+        if (GetAsyncKeyState(PRESET2) & 1)
         {
             if (!bPRESET1 && !bPRESET3)
             {
@@ -56,18 +105,18 @@ int main()
                     sPRESET2 = "X";
                     _clearConsole();
                     cout << "\007" << endl;;
-                    recoilSELECTION(sPRESET1, sPRESET2, sPRESET3, sRAPID, sFLAG);
+                    _userMENU(userSELECT, sPRESET1, sPRESET2, sPRESET3, sRAPID, sFLAG);
                 }
                 else
                 {
                     sPRESET2 = " ";
                     _clearConsole();
-                    recoilSELECTION(sPRESET1, sPRESET2, sPRESET3, sRAPID, sFLAG);
+                    _userMENU(userSELECT, sPRESET1, sPRESET2, sPRESET3, sRAPID, sFLAG);
                 }
             }
         }
 
-        if (GetAsyncKeyState(VK_NUMPAD3) & 1)
+        if (GetAsyncKeyState(PRESET3) & 1)
         {
             if (!bPRESET1 && !bPRESET2)
             {
@@ -77,32 +126,32 @@ int main()
                     sPRESET3 = "X";
                     _clearConsole();
                     cout << "\007" << endl;;
-                    recoilSELECTION(sPRESET1, sPRESET2, sPRESET3, sRAPID, sFLAG);
+                    _userMENU(userSELECT, sPRESET1, sPRESET2, sPRESET3, sRAPID, sFLAG);
                 }
                 else
                 {
                     sPRESET3 = " ";
                     _clearConsole();
-                    recoilSELECTION(sPRESET1, sPRESET2, sPRESET3, sRAPID, sFLAG);
+                    _userMENU(userSELECT, sPRESET1, sPRESET2, sPRESET3, sRAPID, sFLAG);
                 }
             }
         }
 
         //Rapid Fire
-        if (GetAsyncKeyState(VK_NUMPAD4) & 1)
+        if (GetAsyncKeyState(RAPIDFIRE) & 1)
         {
             bRAPID = !bRAPID;
             if (bRAPID)
             {
                 sRAPID = "X";
                 _clearConsole();
-                recoilSELECTION(sPRESET1, sPRESET2, sPRESET3, sRAPID, sFLAG);
+                _userMENU(userSELECT, sPRESET1, sPRESET2, sPRESET3, sRAPID, sFLAG);
             }
             else
             {
                 sRAPID = " ";
                 _clearConsole();
-                recoilSELECTION(sPRESET1, sPRESET2, sPRESET3, sRAPID, sFLAG);
+                _userMENU(userSELECT, sPRESET1, sPRESET2, sPRESET3, sRAPID, sFLAG);
             }
         }
 
@@ -125,13 +174,13 @@ int main()
             {
                 sFLAG = " ";
                 _clearConsole();
-                recoilSELECTION(sPRESET1, sPRESET2, sPRESET3, sRAPID, sFLAG);
+                _userMENU(userSELECT, sPRESET1, sPRESET2, sPRESET3, sRAPID, sFLAG);
             }
             else
             {
                 sFLAG = "X";
                 _clearConsole();
-                recoilSELECTION(sPRESET1, sPRESET2, sPRESET3, sRAPID, sFLAG);
+                _userMENU(userSELECT, sPRESET1, sPRESET2, sPRESET3, sRAPID, sFLAG);
             }
         }
 
@@ -146,11 +195,11 @@ int main()
         {
             if (!bADSFLAG)
             {
-                _flaggedCOIL(7, 7);
+                _flaggedCOIL(recoilStrength1, recoilDelay1);
             }
             else
             {
-                _UniCoil(7, 7);
+                _UniCoil(recoilStrength1, recoilDelay1);
             }
         }
 
@@ -158,11 +207,11 @@ int main()
         {
             if (!bADSFLAG)
             {
-                _flaggedCOIL(10, 10);
+                _flaggedCOIL(recoilStrength2, recoilDelay2);
             }
             else
             {
-                _UniCoil(10, 10);
+                _UniCoil(recoilStrength2, recoilDelay2);
             }
         }
 
@@ -170,18 +219,18 @@ int main()
         {
             if (!bADSFLAG)
             {
-                _flaggedCOIL(15, 15);
+                _flaggedCOIL(recoilStrength3, recoilDelay3);
             }
             else
             {
-                _UniCoil(15, 15);
+                _UniCoil(recoilStrength3, recoilDelay3);
             }
         }
 
         //Rapid Fire
         if (bRAPID)
         {
-            _rapidFire(50);
+            _rapidFire(rapidFireDelay);
         }
 
         //Timer
@@ -189,18 +238,43 @@ int main()
     }
 }
 
-
-
 int custom()
 {
-    _setWindow(40, 10);
     //Original Custom Input Method by "Cubb"
     //Original Source Code: https://www.unknowncheats.me/forum/2871653-post1.html
-    //This is just placeholder until I have finished with the C# port and start porting the new methods I introduced there
+    ////::ShowWindow(::GetConsoleWindow(), SW_SHOW);
+    ////int  speed = 194;
+    ////int delay = 0;
+    ////cout << "enter speed " << endl;
+    ////cin >> speed;
+    ////cout << "speed is " << speed << endl;
+    ////cout << "enter delay " << endl;
+    ////cin >> delay;
+    ////cout << "delay is " << delay << endl;
+    ////while (1)
+    ////{
+    ////    if ((GetKeyState(VK_LBUTTON) & 0x100) != 0)
+    ////    {
+    ////        mouse_event(MOUSEEVENTF_MOVE, 0, speed, NULL, NULL);
+    ////        Sleep(delay);
+    ////    }
+    ////}
 
+
+    //UPDATE 10-16-2021
+    //New plan is to include a configuration file. This will eliminate the need for a separate menu entirely.
+    //User will be able to define Keys and Preset Values
+    
+    //UPDATE , Its now 1am and i have finally got the config setup completed for users. However , I have decided to keep the custom menu.
+    //1, I would like to maintain this small connection to the original authors work
+    //2, I believe users will find it helpful when creating their own configuration to have access to customizing settings while in the process
+    // to expand on this , i have made it so that the configuration will be reloaded when user exits the custom menu. This way user will not have to exit the app to trigger the config load event.
+    // may also include a button to reload the config ... but i dont see a need for it
+
+    //Prepare console for user input
+    _setWindow(40, 10);
     int speed = 9;
     int delay = 9;
-
 
     //Introduce ADS Flag
     string adsFLAG;
@@ -209,6 +283,9 @@ int custom()
     string rapidFLAG;
     bool bRAPID = false;
 
+    //Declare so we can later load in case user makes changes
+    Config config;
+    
     cout << "Enter Recoil Amount: (between 0 - 9)" << endl;
     cin >> speed;
     _clearConsole();
@@ -255,7 +332,7 @@ int custom()
             //Display Main Menu
             bADSFLAG = false;
             sFLAG = "X";
-            recoilSELECTION(sPRESET1, sPRESET2, sPRESET3, sRAPID, sFLAG);
+            _userMENU(userSELECT, sPRESET1, sPRESET2, sPRESET3, sRAPID, sFLAG);
         }
     }
     else if (adsFLAG == "N" || adsFLAG == "n")
@@ -317,7 +394,7 @@ int custom()
         //Display Main Menu
         bADSFLAG = false;
         sFLAG = "X";
-        recoilSELECTION(sPRESET1, sPRESET2, sPRESET3, sRAPID, sFLAG);
+        _userMENU(userSELECT, sPRESET1, sPRESET2, sPRESET3, sRAPID, sFLAG);
     }
 
     // NightFyre Console framework
@@ -327,24 +404,8 @@ int custom()
         if (!cMENU)
         {
             //Create menu
-            std::cout << " _________________________\n";
-            std::cout << "|------CUSTOM PRESET------|\n";
-            std::cout << "| Speed        =>   [" << speed << "]   |\n";
-            std::cout << "| Delay        =>   [" << delay << "]   |\n";
-            std::cout << "| ADS Flag     =>   [" << adsFLAG << "]   |\n";
-            if (bRAPID)
-            {
-                std::cout << "| Rapid Fire   =>   [ON]  |\n";
-
-            }
-            else
-            {
-                std::cout << "| Rapid Fire   =>   [OFF] |\n";
-
-            }
-            std::cout << "|v1.2----------NightFyre--|\n";
-            std::cout << "PRESS [HOME] FOR MAIN MENU\n";
-            std::cout << "PRESS [END] TO QUIT\n" << std::endl;;
+            _setWindow(30, 12);
+            recoilCUSTOM(speed, delay, adsFLAG, bRAPID);
             cMENU = true;
             cRUN = true;
         }
@@ -379,7 +440,8 @@ int custom()
             //Display Main Menu
             bADSFLAG = false;
             sFLAG = "X";
-            recoilSELECTION(sPRESET1, sPRESET2, sPRESET3, sRAPID, sFLAG);
+            _loadConfig(config, userSELECT);
+            _userMENU(userSELECT, sPRESET1, sPRESET2, sPRESET3, sRAPID, sFLAG);
         }
 
         if (GetKeyState(VK_END))
@@ -389,4 +451,6 @@ int custom()
 
         Sleep(1);
     }
+
+    return 0;
 }
